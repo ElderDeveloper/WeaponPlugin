@@ -13,10 +13,5 @@
 			]
 		}
 	],
-	"Plugins": [
-		{
-			"Name": "RiderLink",
-			"Enabled": true
-		}
-	]
+	"Plugins": []
 }
