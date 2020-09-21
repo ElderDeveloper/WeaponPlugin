@@ -1,0 +1,13 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UE4Editor-RiderBlueprintExtension-0004.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"C:\Users\kemal\Desktop\WeaponProject\Intermediate\Build\Win64\WeaponProjectEditor\Development\UnrealEd\SharedPCH.UnrealEd.RTTI.ShadowErrors.h.obj"
+"C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UE4Editor\Development\RiderBlueprintExtension\Module.RiderBlueprintExtension.cpp.obj"
+"C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UE4Editor\Development\RiderBlueprintExtension\Default.rc2.res"
+/OUT:"C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UE4Editor\Development\RiderBlueprintExtension\UE4Editor-RiderBlueprintExtension-0004.lib"
+/INCLUDE:IMPLEMENT_MODULE_RiderBlueprintExtension

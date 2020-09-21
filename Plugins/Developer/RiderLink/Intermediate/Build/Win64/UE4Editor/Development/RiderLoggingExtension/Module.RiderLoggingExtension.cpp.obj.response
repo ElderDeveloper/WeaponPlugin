@@ -1,0 +1,84 @@
+/Zc:inline
+/nologo
+/Oi
+/c
+/Gw
+/Gy
+/Zm1000
+/wd4819
+/D_CRT_STDIO_LEGACY_WIDE_SPECIFIERS=1
+/D_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS=1
+/D_WINDLL
+/D_DISABLE_EXTENDED_ALIGNED_STORAGE
+/source-charset:utf-8
+/execution-charset:utf-8
+/Ox
+/Ot
+/GF
+/Ob2
+/errorReport:prompt
+/EHsc
+/Z7
+/MD
+/bigobj
+/fp:fast
+/Zo
+/Zp8
+/we4456
+/we4458
+/we4459
+/wd4463
+/we4668
+/wd4244
+/wd4838
+/I .
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RiderLoggingExtension\Private
+/I Runtime
+/I Runtime\TraceLog\Public
+/I Runtime\Core\Public
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RD\include
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RD\include\rd_core_cpp
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RD\include\rd_framework_cpp
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RD\include\rd_core_cpp\lifetime
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RD\include\rd_core_cpp\reactive
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RD\include\rd_core_cpp\std
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RD\include\rd_core_cpp\types
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RD\include\rd_core_cpp\util
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RD\include\rd_core_cpp\reactive\base
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RD\include\rd_framework_cpp\base
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RD\include\rd_framework_cpp\ext
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RD\include\rd_framework_cpp\impl
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RD\include\rd_framework_cpp\intern
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RD\include\rd_framework_cpp\scheduler
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RD\include\rd_framework_cpp\serialization
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RD\include\rd_framework_cpp\task
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RD\include\rd_framework_cpp\util
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RD\include\rd_framework_cpp\wire
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RD\include\rd_framework_cpp\scheduler\base
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RD\include\thirdparty
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RD\include\thirdparty\clsocket
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RD\include\thirdparty\mpark
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RD\include\thirdparty\nonstd
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RD\include\thirdparty\optional
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RD\include\thirdparty\tsl
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RD\include\thirdparty\clsocket\src
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RD\include\thirdparty\optional\tl
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RiderLink\Public
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RiderBlueprintExtension\Public
+/I C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Source\RiderLoggingExtension\Public
+/I "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\INCLUDE"
+/I "C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6.2\include\um"
+/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt"
+/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared"
+/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um"
+/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt"
+/FI"C:\Users\kemal\Desktop\WeaponProject\Intermediate\Build\Win64\WeaponProjectEditor\Development\Core\SharedPCH.Core.RTTI.ShadowErrors.h"
+/Yu"C:\Users\kemal\Desktop\WeaponProject\Intermediate\Build\Win64\WeaponProjectEditor\Development\Core\SharedPCH.Core.RTTI.ShadowErrors.h"
+/Fp"C:\Users\kemal\Desktop\WeaponProject\Intermediate\Build\Win64\WeaponProjectEditor\Development\Core\SharedPCH.Core.RTTI.ShadowErrors.h.pch"
+"C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UE4Editor\Development\RiderLoggingExtension\Module.RiderLoggingExtension.cpp"
+/FI"C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UE4Editor\Development\RiderLoggingExtension\Definitions.RiderLoggingExtension.h"
+/Fo"C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UE4Editor\Development\RiderLoggingExtension\Module.RiderLoggingExtension.cpp.obj"
+/TP
+/GR
+/W4
