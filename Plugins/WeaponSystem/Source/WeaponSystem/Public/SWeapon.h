@@ -54,8 +54,8 @@ public:
 
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<< PROPERTIES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-	
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="Weapon")
+	FTransform tWeaponRelativeTransform;
 
 	//<<<<<<<<<<<<<<<<<<<<<FIRE TYPE>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="Weapon|Fire")
