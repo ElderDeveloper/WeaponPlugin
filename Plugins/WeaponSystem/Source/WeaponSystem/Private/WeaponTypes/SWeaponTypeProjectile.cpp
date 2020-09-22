@@ -20,7 +20,6 @@ void ASWeaponTypeProjectile::F_ProcessFire()
        F_CalculateSpread(StartLocation,EndLocation,SpawnRotation);
        actorSpawnParameters.Owner=GetOwner();
         
-       for (int i =1 ; i<=iNumberOfBulletsFired ; i++)
        GetWorld()->SpawnActor<AActor>(aProjectileClass,StartLocation,SpawnRotation,actorSpawnParameters);
 
     }
