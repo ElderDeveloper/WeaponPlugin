@@ -46,12 +46,18 @@ void USWeaponComponent::Reload()
     }
 }
 
-void USWeaponComponent::BeginAim()
+void USWeaponComponent::ProcessAim(bool bStart)
 {
-    isAiming=true;
+    if (CurrentSpawnedWeapon)
+    {
+       bIsAiming=bStart;
+        GEngine->AddOnScreenDebugMessage(-1,2.f,FColor::Red,FString::FromInt(bStart));
+       CurrentSpawnedWeapon->F_ProcessAim(bStart);
+    }
+
 }
 
-void USWeaponComponent::EndAim()
+bool USWeaponComponent::ReturnAiming()
 {
-    isAiming=false;
+    return bIsAiming;
 }

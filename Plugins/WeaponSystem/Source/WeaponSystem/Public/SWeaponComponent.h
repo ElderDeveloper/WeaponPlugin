@@ -3,6 +3,8 @@
 
 #include "SWeaponComponent.generated.h"
 
+
+class UBlendSpace1D;
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class USWeaponComponent : public UActorComponent
 {
@@ -16,8 +18,7 @@ public:
     class ASWeapon* CurrentSpawnedWeapon;
 
 
-    UPROPERTY(BlueprintReadOnly)
-    bool isAiming;
+ 
     
     UFUNCTION(BlueprintCallable)
     void SpawnWeapon( TSubclassOf<class ASWeapon> SpawnWeaponClass , class USkeletalMeshComponent* AttachComponent,FName AttachSocket);
@@ -30,8 +31,12 @@ public:
     void Reload();
 
     UFUNCTION(BlueprintCallable)
-    void BeginAim();
+    void ProcessAim(bool bStart);
 
-    UFUNCTION(BlueprintCallable)
-    void EndAim();
+    UFUNCTION(BlueprintPure)
+    bool ReturnAiming();
+    
+private:
+    UPROPERTY()
+    bool bIsAiming;
 };
