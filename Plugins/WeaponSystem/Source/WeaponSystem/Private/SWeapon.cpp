@@ -14,6 +14,7 @@
 #include "Kismet/KismetArrayLibrary.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Math/UnrealMathUtility.h"
+#include "Animation/BlendSpace1D.h"
 
 
 // <<<<<<<<<<<<<<<<<< DEFAULT EVENTS >>>>>>>>>>>>>>
@@ -60,6 +61,13 @@ void ASWeapon::BeginPlay()
 		tlRecoilTimeline.AddInterpFloat(uRecoilCurve, TimelineCallback);
 		tlRecoilTimeline.SetTimelineFinishedFunc(TimelineFinishedCallback);
 	}
+	if (uAimCurveFloat)
+	{
+		GEngine->AddOnScreenDebugMessage(-1,2.f,FColor::Emerald,"aim timeline");
+		FOnTimelineFloat TimelineCallback;
+		TimelineCallback.BindUFunction(this, FName("F_ProcessAimTimeline"));
+		tlAimTimeline.AddInterpFloat(uAimCurveFloat, TimelineCallback);
+	}
 	
 }
 
@@ -68,6 +76,7 @@ void ASWeapon::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 	tlRecoilTimeline.TickTimeline(DeltaSeconds);
+	tlAimTimeline.TickTimeline(DeltaSeconds);
 }
 
 
@@ -109,7 +118,7 @@ void ASWeapon::F_RequestBeginFire()
 		
 		if (animWeaponFireAnimation)	WeaponSkeleton->PlayAnimation(animWeaponFireAnimation,false);
 		
-		if(PlayerSkeletonComponent && animPlayerFireMontage)	{	PlayerSkeletonComponent->GetAnimInstance()->Montage_Play(animPlayerFireMontage);	}
+		if(PlayerSkeletonComponent && F_RetrunPlayerFireMontage())	{	PlayerSkeletonComponent->GetAnimInstance()->Montage_Play(F_RetrunPlayerFireMontage());	}
 		
 		switch (eWeaponFireType)
 		{
@@ -169,7 +178,7 @@ void ASWeapon::F_PlayAutoFire()
 	
 	if (animWeaponFireAnimation)	WeaponSkeleton->PlayAnimation(animWeaponFireAnimation,false);
 	
-	if(PlayerSkeletonComponent && animPlayerFireMontage)	{	PlayerSkeletonComponent->GetAnimInstance()->Montage_Play(animPlayerFireMontage);	}
+	if(PlayerSkeletonComponent && F_RetrunPlayerFireMontage())	{	PlayerSkeletonComponent->GetAnimInstance()->Montage_Play(F_RetrunPlayerFireMontage());	}
 	
 }
 
@@ -181,7 +190,7 @@ void ASWeapon::F_PlayerBurstFire()
 
 	if (animWeaponFireAnimation)	WeaponSkeleton->PlayAnimation(animWeaponFireAnimation,false);
 	
-	if(PlayerSkeletonComponent && animPlayerFireMontage)	{	PlayerSkeletonComponent->GetAnimInstance()->Montage_Play(animPlayerFireMontage);	}
+	if(PlayerSkeletonComponent && F_RetrunPlayerFireMontage())	{	PlayerSkeletonComponent->GetAnimInstance()->Montage_Play(F_RetrunPlayerFireMontage());	}
 	
 	BurstIndex++;
 	
@@ -220,6 +229,33 @@ void ASWeapon::F_PlaySingleFireEffects()
 	if (pWeaponMuzzle) UGameplayStatics::SpawnEmitterAttached(pWeaponMuzzle,WeaponSkeleton,nFireSocketName,FVector(ForceInit),tWeaponMuzzleTransform.Rotator(),tWeaponMuzzleTransform.GetScale3D());
 	
 	if (!bLoopSoundValid && sFireStartSound) UGameplayStatics::PlaySoundAtLocation(GetWorld(),sFireStartSound,WeaponSkeleton->GetSocketLocation(nFireSocketName));
+}
+
+
+void ASWeapon::F_ProcessAim(bool bStart)
+{
+	if (uAimCurveFloat)
+	{
+		bIsAiming=bStart;
+		
+		if (bStart)
+		{	tlAimTimeline.Play();	}
+		
+		else
+		{	tlAimTimeline.Reverse();	}
+		
+	}
+
+}
+
+void ASWeapon::F_ProcessAimTimeline()
+{
+	GEngine->AddOnScreenDebugMessage(-1,2.f,FColor::Red,"FString::SanitizeFloat(alpha)");
+	if (OwnerAsCharacter)
+	{
+		float alpha = uAimCurveFloat->GetFloatValue(tlAimTimeline.GetPlaybackPosition());
+		GEngine->AddOnScreenDebugMessage(-1,2.f,FColor::Red,FString::SanitizeFloat(alpha));
+	}
 }
 
 
@@ -344,6 +380,42 @@ void ASWeapon::F_SetupWeapon(APawn* NewOwner , USkeletalMeshComponent*PlayerSkel
 }
 
 
+UAnimMontage* ASWeapon::F_RetrunPlayerFireMontage()
+{
+	if(bIsAiming) return animPlayerAimFireMontage;
+	return  animPlayerFireMontage;
+}
+
+
+void ASWeapon::F_CalculateSpread(FVector& StartLocation, FVector& EndLocation, FRotator& SpawnRotation , float Distance)
+{
+	if (OwnerCameraNanager)
+	{
+		FHitResult PlayerCameraHit;
+		
+		FVector End=OwnerCameraNanager->GetActorForwardVector()*100000000;
+		
+		End +=OwnerCameraNanager->GetCameraLocation();
+		
+		GetWorld()->LineTraceSingleByChannel(PlayerCameraHit,OwnerCameraNanager->GetCameraLocation(),End,FireCalculateChannel);
+
+		SpawnRotation= UKismetMathLibrary::FindLookAtRotation(WeaponSkeleton->GetSocketLocation(nFireSocketName),PlayerCameraHit.TraceEnd);
+
+	}
+	else
+	{
+		SpawnRotation = WeaponSkeleton->GetSocketRotation(nFireSocketName);
+	}
+
+	StartLocation = WeaponSkeleton->GetSocketLocation(nFireSocketName);
+	
+	SpawnRotation.Yaw=SpawnRotation.Yaw+FMath::RandRange(fCurrentSpread*-1,fCurrentSpread);
+	
+	SpawnRotation.Pitch=SpawnRotation.Pitch+FMath::RandRange(fCurrentSpread*-1,fCurrentSpread);
+
+	EndLocation=StartLocation+(UKismetMathLibrary::GetForwardVector(SpawnRotation)*Distance);
+}
+
 
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<< RECOIL >>>>>>>>>>>>>>>>>>>>>>>>>
@@ -452,36 +524,6 @@ void ASWeapon::F_DecreaseSpread()
 	}
 }
 
-
-
-void ASWeapon::F_CalculateSpread(FVector& StartLocation, FVector& EndLocation, FRotator& SpawnRotation , float Distance)
-{
-	if (OwnerCameraNanager)
-	{
-		FHitResult PlayerCameraHit;
-		
-		FVector End=OwnerCameraNanager->GetActorForwardVector()*100000000;
-		
-		End +=OwnerCameraNanager->GetCameraLocation();
-		
-		GetWorld()->LineTraceSingleByChannel(PlayerCameraHit,OwnerCameraNanager->GetCameraLocation(),End,FireCalculateChannel);
-
-		SpawnRotation= UKismetMathLibrary::FindLookAtRotation(WeaponSkeleton->GetSocketLocation(nFireSocketName),PlayerCameraHit.TraceEnd);
-
-	}
-	else
-	{
-		SpawnRotation = WeaponSkeleton->GetSocketRotation(nFireSocketName);
-	}
-
-	StartLocation = WeaponSkeleton->GetSocketLocation(nFireSocketName);
-	
-	SpawnRotation.Yaw=SpawnRotation.Yaw+FMath::RandRange(fCurrentSpread*-1,fCurrentSpread);
-	
-	SpawnRotation.Pitch=SpawnRotation.Pitch+FMath::RandRange(fCurrentSpread*-1,fCurrentSpread);
-
-	EndLocation=StartLocation+(UKismetMathLibrary::GetForwardVector(SpawnRotation)*Distance);
-}
 
 
 

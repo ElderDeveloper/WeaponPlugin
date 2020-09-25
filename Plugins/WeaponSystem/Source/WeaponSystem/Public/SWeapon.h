@@ -211,17 +211,29 @@ public:
 	USoundBase* sClipEmptySound;
 
 
+	//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Aim >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="Weapon|Aim")
+	UCurveFloat* uAimCurveFloat;
+	
+	FTimeline tlAimTimeline;
+
+	bool bIsAiming=false;
 
 	//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< PLAYER ANIMATIONS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="Weapon|PlayerAnimations")
 	UAnimMontage *animPlayerFireMontage;
 
 	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="Weapon|PlayerAnimations")
+	UAnimMontage* animPlayerAimFireMontage;
+
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="Weapon|PlayerAnimations")
 	UAnimMontage*animPlayerReloadMontage;
 
-	
 
+
+
+	
 private:
 
 	
@@ -283,6 +295,11 @@ public:
 
 	void F_PlaySingleFireEffects();
 
+	//<<<<<<<<<<<<<<<<< Aim >>>>>>>>>>>>>>>>>>>
+	void F_ProcessAim(bool bStart);
+	
+	void F_ProcessAimTimeline();
+
 
 	
 	UFUNCTION(BlueprintCallable)
@@ -326,6 +343,8 @@ private:
 	void F_DecreaseSpread();
 
 
+	//<<<<<<<<<<<<<<<<<<<<<<<< Aim >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	UAnimMontage* F_RetrunPlayerFireMontage();
 
 	//<<<<<<<<<<<<<<<<<<<<<< is valid Returners >>>>>>>>>>>>>>>>>>>
 	
