@@ -1,7 +1,11 @@
+
+<html>
+	<body>
 <h1>Weapon Plugin</h1>
 
 
 <h2>Links</h2>
+
   <ul>
      <li>  Facebook: https://tr-tr.facebook.com/kemalerdem09  </li>
      <li>  LinkedIn: https://www.linkedin.com/in/kemal-erdem-yilmaz-a2178411b  </li>
@@ -9,7 +13,8 @@
      <li>  Unreal Engine Marketplace: https://unrealengine.com/marketplace/en-US/profile/Kemal+Erdem+YILMAZ  </li>
      <li>  Itch.io: https://elderdeveloper.itch.io/  </li>
   </ul>
-  
+
+
   <h2>News</h2>
   
   <h2>Features</h2>
@@ -59,10 +64,15 @@
 <li>Reopen your project</li>
 <li>Add to your level: <tt>AURCameraActor</tt> to show the video and one of the <a href="boards">fiducial patterns</a>: <tt>PatternChessboard_A</tt>, <tt>PatternChessboard_B</tt>,  <tt>PatternCube</tt>, <tt>PatternSquare_A</tt>, <tt>PatternSquare_B</tt></li>
 <li>Add a shadow plane actor if you want shadows cast on the surface under the markers</li>
-<li>Run the game to generate pattern images. Then print the patterns from <tt>YourProject/Saved/AugmentedUnreality/Patterns</tt>
+<li>Run the game to generate pattern images. Then print the patterns from <tt>YourProject/Saved/AugmentedUnreality/Patterns</tt></li>
 </ul>
 </p>
+		
+		<h2>Project Status (IMPORTANT) </h2>
 
-  # Project Status (IMPORTANT)
-  
-  # How and Why ?
+		<h2>How and Why ? </h2>
+
+	</body>
+</html>
+
+
