@@ -1,18 +1,14 @@
 <h1>Weapon Plugin</h1>
 
 
-# Links:
-
-
-  Facebook: https://tr-tr.facebook.com/kemalerdem09
-  
-  LinkedIn: https://www.linkedin.com/in/kemal-erdem-yilmaz-a2178411b
-  
-  Youtube: https://www.youtube.com/channel/UCmWrCX3Zpm0vbtH_-WHUSDw
-  
-  Unreal Engine Marketplace: https://unrealengine.com/marketplace/en-US/profile/Kemal+Erdem+YILMAZ
-  
-  Itch.io: https://elderdeveloper.itch.io/
+<h2>Links</h2>
+  <ul>
+     <li>  Facebook: https://tr-tr.facebook.com/kemalerdem09  </li>
+     <li>  LinkedIn: https://www.linkedin.com/in/kemal-erdem-yilmaz-a2178411b  </li>
+     <li>  Youtube: https://www.youtube.com/channel/UCmWrCX3Zpm0vbtH_-WHUSDw  </li>
+     <li>  Unreal Engine Marketplace: https://unrealengine.com/marketplace/en-US/profile/Kemal+Erdem+YILMAZ  </li>
+     <li>  Itch.io: https://elderdeveloper.itch.io/  </li>
+  </ul>
   
   <h2>News</h2>
   
@@ -44,9 +40,7 @@
 <li><a href="#downloads">Download the example project</a></li>
 <li>Decompress the archive - and move <tt>AugmentedUnrealityEx</tt> to the location where you store your Unreal projects.</li>
 <li>Launch Unreal Engine and open <tt>AugmentedUnrealityEx/AugmentedUnrealityEx.uproject</tt>.</li>
-<li>Print the following boards:
-<a href="http://adynathos.net/dev/aur/ChArUco_20_C.png">Chessboard 1</a>, <a href="http://adynathos.net/dev/aur/ChArUco_26_C.png">Chessboard 2</a>, <a href="http://adynathos.net/dev/aur/AURBoard_SquareB.png">Square B</a>
-</li>
+
 <li>Connect a camera and launch the game.</li>
 <li>If the virtual object are not well aligned with the markers, perform <a href="#section_calibration">camera calibration</a>.</li>
 </ul>
