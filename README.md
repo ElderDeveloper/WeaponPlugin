@@ -1,10 +1,6 @@
-﻿Weapon Plugin Readme:
-
-
-
+# WeaponPlugin
 
 # Links:
-
 
   Facebook: https://tr-tr.facebook.com/kemalerdem09
   
