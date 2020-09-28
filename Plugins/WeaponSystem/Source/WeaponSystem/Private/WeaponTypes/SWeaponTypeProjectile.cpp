@@ -21,7 +21,7 @@ void ASWeaponTypeProjectile::F_ProcessFire()
        actorSpawnParameters.Owner=GetOwner();
         
        GetWorld()->SpawnActor<AActor>(aProjectileClass,StartLocation,SpawnRotation,actorSpawnParameters);
-
+       GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, "aa");
     }
 };
 
