@@ -1,0 +1,13 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UE4Editor-RiderLoggingExtension-0003.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"C:\Users\kemal\Desktop\WeaponProject\Intermediate\Build\Win64\WeaponProjectEditor\Development\Core\SharedPCH.Core.RTTI.ShadowErrors.h.obj"
+"C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UE4Editor\Development\RiderLoggingExtension\Module.RiderLoggingExtension.cpp.obj"
+"C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UE4Editor\Development\RiderLoggingExtension\Default.rc2.res"
+/OUT:"C:\Users\kemal\Desktop\WeaponProject\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UE4Editor\Development\RiderLoggingExtension\UE4Editor-RiderLoggingExtension-0003.lib"
+/INCLUDE:IMPLEMENT_MODULE_RiderLoggingExtension

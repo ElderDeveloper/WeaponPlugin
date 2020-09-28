@@ -68,11 +68,11 @@ void ASWeaponTypeTrace::F_ProcessFire()
     
     if (bShouldDrawLine)
     {
-        DrawDebugLine(GetWorld(),StartLocation,EndLocation,cDebugeColor,false,fLineDuration,0,fLineTickness);
+        DrawDebugLine(GetWorld(),StartLocation,EndLocation,cDebugeColor,false,fLineDuration,0,fLineThickness);
     }
 }
 
-void ASWeaponTypeTrace::F_ProcessImpactEffects(FHitResult i)
+void ASWeaponTypeTrace::F_ProcessImpactEffects(const FHitResult i)
 {
     
     if (i.GetComponent()->IsSimulatingPhysics())
@@ -117,7 +117,7 @@ void ASWeaponTypeTrace::F_ProcessImpactEffects(FHitResult i)
 }
 
 
-void ASWeaponTypeTrace::F_StructImpactEffects(FHitResult i)
+void ASWeaponTypeTrace::F_StructImpactEffects(const FHitResult i)
 {
     if (structHitEffects.pImpactParticle)
         UGameplayStatics::SpawnEmitterAtLocation(GetWorld(),structHitEffects.pImpactParticle,i.ImpactPoint,i.ImpactPoint.Rotation(),structHitEffects.ParticleScale);

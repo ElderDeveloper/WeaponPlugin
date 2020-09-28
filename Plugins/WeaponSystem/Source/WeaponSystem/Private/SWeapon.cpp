@@ -11,10 +11,10 @@
 #include "Components/AudioComponent.h"
 #include "GameFramework/PlayerController.h"
 #include "Camera/CameraComponent.h"
-#include "Kismet/KismetArrayLibrary.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Math/UnrealMathUtility.h"
-#include "Animation/BlendSpace1D.h"
+
+
 
 
 // <<<<<<<<<<<<<<<<<< DEFAULT EVENTS >>>>>>>>>>>>>>
@@ -39,16 +39,16 @@ ASWeapon::ASWeapon()
 
 	ReloadMontageBlendOut.BindUObject(this,&ASWeapon::F_ReloadBlendOut);
 
-	WeaponCameraComponent=CreateDefaultSubobject<UCameraComponent>(TEXT("WeaponCameraComponent"));
-	WeaponCameraComponent->SetupAttachment(RootComponent);
-	WeaponCameraComponent->SetActive(false);
 }
+
 
 
 void ASWeapon::BeginPlay()
 {
 	Super::BeginPlay();
+	
 	bLoopSoundValid=sFireLoopSound!=nullptr;
+	
 	if(bShouldSpread)fCurrentSpread=fBeginSpread;
 
 	if (uRecoilCurve)
@@ -63,13 +63,15 @@ void ASWeapon::BeginPlay()
 	}
 	if (uAimCurveFloat)
 	{
-		GEngine->AddOnScreenDebugMessage(-1,2.f,FColor::Emerald,"aim timeline");
-		FOnTimelineFloat TimelineCallback;
-		TimelineCallback.BindUFunction(this, FName("F_ProcessAimTimeline"));
-		tlAimTimeline.AddInterpFloat(uAimCurveFloat, TimelineCallback);
+
+		FOnTimelineFloat AimTimelineCallback;
+		AimTimelineCallback.BindUFunction(this, FName("F_ProcessAimTimeline"));
+		tlAimTimeline.AddInterpFloat(uAimCurveFloat, AimTimelineCallback);
+
 	}
 	
 }
+
 
 
 void ASWeapon::Tick(float DeltaSeconds)
@@ -88,12 +90,12 @@ void ASWeapon::OnConstruction(const FTransform& Transform)
 	
 	SilencerComponent->AttachToComponent(WeaponSkeleton, *AttachmentTransformRules,SilencerAttachmentName);
 
-	WeaponCameraComponent->SetRelativeTransform(CameraRelativeTransform);
 }
 
 
 
 void ASWeapon::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const{}
+
 
 
 
@@ -220,6 +222,8 @@ void ASWeapon::F_FireEvents()
 
 
 
+
+
 // <<<<<<<<<<<<<<<<<<<<< EFFECTS >>>>>>>>>>>>>>>>>
 
 void ASWeapon::F_PlaySingleFireEffects()
@@ -232,33 +236,6 @@ void ASWeapon::F_PlaySingleFireEffects()
 }
 
 
-void ASWeapon::F_ProcessAim(bool bStart)
-{
-	if (uAimCurveFloat)
-	{
-		bIsAiming=bStart;
-		
-		if (bStart)
-		{	tlAimTimeline.Play();	}
-		
-		else
-		{	tlAimTimeline.Reverse();	}
-		
-	}
-
-}
-
-void ASWeapon::F_ProcessAimTimeline()
-{
-	GEngine->AddOnScreenDebugMessage(-1,2.f,FColor::Red,"FString::SanitizeFloat(alpha)");
-	if (OwnerAsCharacter)
-	{
-		float alpha = uAimCurveFloat->GetFloatValue(tlAimTimeline.GetPlaybackPosition());
-		GEngine->AddOnScreenDebugMessage(-1,2.f,FColor::Red,FString::SanitizeFloat(alpha));
-	}
-}
-
-
 
 void ASWeapon::F_FireAudioLoop(class UAudioComponent* audio)
 {
@@ -268,6 +245,7 @@ void ASWeapon::F_FireAudioLoop(class UAudioComponent* audio)
 	}
 
 }
+
 
 
 
@@ -316,6 +294,7 @@ void ASWeapon::F_ReloadBlendOut(UAnimMontage* animMontage, bool bInterrupted)
 }
 
 
+
 void ASWeapon::F_ReloadBlendOut()
 {
 	const int32 Request=iMaxAmmoInClip-iCurrentAmmo;
@@ -336,6 +315,7 @@ void ASWeapon::F_ReloadBlendOut()
 	bIsReloading=false;
 	AmmoStateChangedDelegate.Broadcast(iCurrentAmmo,iCurrentAmmoInBag);
 }
+
 
 
 
@@ -368,13 +348,22 @@ void ASWeapon::F_RemoveAmmo(int32 RemoveAmount)
 
 
 
-void ASWeapon::F_SetupWeapon(APawn* NewOwner , USkeletalMeshComponent*PlayerSkeletalMesh)
+void ASWeapon::F_SetupWeapon( APawn* NewOwner , USkeletalMeshComponent*PlayerSkeletalMesh)
 {
 	if (PlayerSkeletalMesh)	PlayerSkeletonComponent=PlayerSkeletalMesh;
 	
 	SetOwner(NewOwner);
 	OwnerAsPlayerController=Cast<APlayerController>(GetOwner()->GetInstigatorController());
 	OwnerAsCharacter=Cast<ACharacter>(NewOwner);
+	
+	if(OwnerAsCharacter)
+	{
+		OwnerCamera=OwnerAsCharacter->FindComponentByClass<UCameraComponent>();
+		if (OwnerCamera)
+		{
+			PlayerCameraRelative=OwnerCamera->GetRelativeLocation();
+		}
+	}
 	if(OwnerAsPlayerController) OwnerCameraNanager=OwnerAsPlayerController->PlayerCameraManager;
 	
 }
@@ -387,7 +376,8 @@ UAnimMontage* ASWeapon::F_RetrunPlayerFireMontage()
 }
 
 
-void ASWeapon::F_CalculateSpread(FVector& StartLocation, FVector& EndLocation, FRotator& SpawnRotation , float Distance)
+
+void ASWeapon::F_CalculateSpread(FVector& StartLocation, FVector& EndLocation, FRotator& SpawnRotation ,const float Distance)
 {
 	if (OwnerCameraNanager)
 	{
@@ -418,7 +408,9 @@ void ASWeapon::F_CalculateSpread(FVector& StartLocation, FVector& EndLocation, F
 
 
 
-//<<<<<<<<<<<<<<<<<<<<<<<<<< RECOIL >>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+//<<<<<<<<<<<<<<<<<<<<<<<<<< RECOIL >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 void ASWeapon::F_ProcessRecoil()
 {
@@ -485,7 +477,8 @@ void ASWeapon::F_RecoilBack()
 
 
 
-//<<<<<<<<<<<<<<<<<<<<<<<<<< SPREAD >>>>>>>>>>>>>>>>>>>>>>>
+
+//<<<<<<<<<<<<<<<<<<<<<<<<<< SPREAD >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 void ASWeapon::F_RiseSpread()
 {
@@ -524,6 +517,42 @@ void ASWeapon::F_DecreaseSpread()
 	}
 }
 
+
+
+
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<< AIM >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+void ASWeapon::F_ProcessAim(const bool bStart)
+{
+	if (uAimCurveFloat)
+	{
+		bIsAiming=bStart;
+		
+		if (bStart)
+		{
+			tlAimTimeline.Play();
+		}
+		
+		else
+		{
+			tlAimTimeline.Reverse();
+		}
+		
+	}
+
+}
+
+
+
+void ASWeapon::F_ProcessAimTimeline()
+{
+	if (OwnerAsCharacter && PlayerSkeletonComponent && OwnerCamera)
+	{
+		float alpha = uAimCurveFloat->GetFloatValue(tlAimTimeline.GetPlaybackPosition());
+		FTransform WeaponTransfrom = UKismetMathLibrary::ConvertTransformToRelative(OwnerAsCharacter->GetTransform(),WeaponSkeleton->GetSocketTransform(nWeaponAimSocketName));
+		OwnerCamera->SetRelativeLocation(UKismetMathLibrary::VLerp(PlayerCameraRelative,WeaponTransfrom.GetLocation(),alpha));
+	}
+}
 
 
 

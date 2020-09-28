@@ -8,56 +8,77 @@ class ASWeaponTypeTrace : public ASWeapon
     GENERATED_BODY()
     
 public:
-    
-    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="Weapon|Trace")
+    /** Impact collision channel */
+    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="WeaponTraceType")
     TEnumAsByte<ECollisionChannel> tcTraceChannel;
 
-    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="Weapon|Trace")
+    /** How far the bullet will travel */
+    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="WeaponTraceType")
     float fLineTraceDistance=1000000;
-    
-    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="Weapon|Trace|Damage")
+
+    /** Choosing between point damage or apply damage */
+    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="WeaponTraceType|Damage")
     bool bPointDamage;
-    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="Weapon|Trace|Damage")
+    
+    /** Minimum damage applied on impact */
+    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="WeaponTraceType|Damage")
     float fMinDamage=10;
-    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="Weapon|Trace|Damage")
+
+    /** Maximum damage applied on impact */
+    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="WeaponTraceType|Damage")
     float fMaxDamage=15;
-    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="Weapon|Trace|Damage")
+
+    /** If this value bigger than 0 trace will pierce through and lessen the applied damage until applied damage is less than zero */
+    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="WeaponTraceType|Damage")
     float fDamageReductionOnImpact=0;
-    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="Weapon|Trace|Damage")
+
+    /** Damage type class */
+    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="WeaponTraceType|Damage")
     TSubclassOf<class UDamageType>  dtDamageType;
 
 
-	
-    //P_LineTraceImpact data table
-    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="Weapon|Trace|Effects")
+   
+    /** How much impulse force applied on contacted component */
+    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="WeaponTraceType|Effects")
     float fImpactForce;
 
-
-    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="Weapon|Trace|Effects")
+    /** P_LineTraceImpact data table */
+    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="WeaponTraceType|Effects")
     UDataTable* EffectsTable;
 
-    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="Weapon|Trace|Effects")
+    /** This struct will be used if Effects table is not defined */
+    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="WeaponTraceType|Effects")
     FImpactStruct structHitEffects;
 
     //E_LineDebug
 
-    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="Weapon|Trace|Debug")
+    /** if true  Draw debug line */
+    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="WeaponTraceType|Debug")
     bool bShouldDrawLine;
-    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="Weapon|Trace|Debug")
+
+    /** Color for debug line */
+    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="WeaponTraceType|Debug")
     FColor cDebugeColor;
-    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="Weapon|Trace|Debug")
+
+    /** Debug line lifetime */
+    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="WeaponTraceType|Debug")
     float fLineDuration=1;
-    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="Weapon|Trace|Debug")
-    float fLineTickness=0.2;
+
+    /** Debug line thickness */
+    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="WeaponTraceType|Debug")
+    float fLineThickness=0.2;
 
 protected:
     virtual void F_ProcessFire() override;
 
-    void F_ProcessImpactEffects(FHitResult i);
+    /** Retrieves physics surface and generates impact effect struct for F_StructImpactEffects */
+    void F_ProcessImpactEffects(const FHitResult i);
 
-    void F_StructImpactEffects(FHitResult i);
+    /** Spawn effects defined in struct */
+    void F_StructImpactEffects(const FHitResult i);
 
 private:
+    /** Holding damage amount between pierces */
     float fCurrentDamageOutput;
 
 };

@@ -12,10 +12,14 @@ class ASWeaponTypeProjectile : public ASWeapon
 public:
     ASWeaponTypeProjectile();
 
-    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="Weapon|Bullet")
+    /** This is simple control for replication , spawn process is different between replicated actor and non replicated actor */
+    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="WeaponProjectileType|Bullet")
     bool bIsReplicatedBullet;
-    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="Weapon|Bullet")
+    
+    /** Any class can be selected but main intent is a class with projectile component attached */
+    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="WeaponProjectileType|Bullet")
     TSubclassOf<AActor> aProjectileClass;
+
 
     FActorSpawnParameters actorSpawnParameters = FActorSpawnParameters();
 

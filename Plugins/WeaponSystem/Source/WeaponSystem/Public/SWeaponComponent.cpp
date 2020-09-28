@@ -6,8 +6,7 @@ USWeaponComponent::USWeaponComponent()
 {
 }
 
-void USWeaponComponent::SpawnWeapon(TSubclassOf<ASWeapon> SpawnWeaponClass, USkeletalMeshComponent* AttachComponent,
-                                    FName AttachSocket)
+void USWeaponComponent::SpawnWeapon(TSubclassOf<ASWeapon> SpawnWeaponClass, USkeletalMeshComponent* AttachComponent, const FName AttachSocket)
 {
     if (SpawnWeaponClass)
     {
@@ -19,6 +18,7 @@ void USWeaponComponent::SpawnWeapon(TSubclassOf<ASWeapon> SpawnWeaponClass, USke
         CurrentSpawnedWeapon->AttachToComponent(AttachComponent, FAttachmentTransformRules(EAttachmentRule::SnapToTarget,false),AttachSocket);
         CurrentSpawnedWeapon->F_SetupWeapon(Cast<APawn>(GetOwner()),AttachComponent);
         CurrentSpawnedWeapon->SetActorRelativeTransform(CurrentSpawnedWeapon->tWeaponRelativeTransform);
+        CurrentSpawnedWeapon->nWeaponAttachSocketName=AttachSocket;
     }
 }
 
@@ -46,12 +46,11 @@ void USWeaponComponent::Reload()
     }
 }
 
-void USWeaponComponent::ProcessAim(bool bStart)
+void USWeaponComponent::ProcessAim(const bool bStart)
 {
     if (CurrentSpawnedWeapon)
     {
        bIsAiming=bStart;
-        GEngine->AddOnScreenDebugMessage(-1,2.f,FColor::Red,FString::FromInt(bStart));
        CurrentSpawnedWeapon->F_ProcessAim(bStart);
     }
 
