@@ -58,8 +58,8 @@
 <h3>Getting started - try the example project</h3>
 <p>
 	<ul>
-		<li>Decompress the archive - and move <tt>WeeaponPlugin</tt> to the location where you store your Unreal projects.</li>
-		<li>Launch Unreal Engine and open <tt>WeeaponPlugin/WeeaponPlugin.uproject</tt>.</li>
+		<li>Decompress the archive - and move <tt>WeaponPlugin-master</tt> to the location where you store your Unreal projects.</li>
+		<li>Launch Unreal Engine and open <tt>WeaponPlugin-master/WeaponProject.uproject</tt>.</li>
 		<li>launch the game.</li>
 	</ul>
 </p>
@@ -67,7 +67,7 @@
 <h3>Add plugin to an existing project:</h3>
 <p>
 	<ul>
-		<li>Decompress the archive - and move directory <tt>WeeaponPlugin</tt> to <tt>YourProject/Plugins</tt></li>
+		<li>Decompress the archive - and move directory <tt>WeaponPlugin-master/Plugins/WeaponSystem</tt> to <tt>YourProject/Plugins</tt></li>
 		<li>Reopen your project</li>
 		<li>Add to your Character: Add <tt> SWeapon </tt> component to your character</li>
 		<li>In Blueprint Call Spawn Weapon From SWeapon Component</li>
