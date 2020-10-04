@@ -61,7 +61,6 @@
 		<li>Decompress the archive - and move <tt>WeeaponPlugin</tt> to the location where you store your Unreal projects.</li>
 		<li>Launch Unreal Engine and open <tt>WeeaponPlugin/WeeaponPlugin.uproject</tt>.</li>
 		<li>launch the game.</li>
-		
 	</ul>
 </p>
 
