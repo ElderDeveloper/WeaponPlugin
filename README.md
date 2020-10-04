@@ -40,8 +40,9 @@
 		<li>Mac</li>
 	</ul>
 
-<h2>Links</h2>
 
+<h2>Links</h2>
+<p>
  	 <ul>
     	<li>  Facebook: https://tr-tr.facebook.com/kemalerdem09  </li>
    	 	<li>  LinkedIn: https://www.linkedin.com/in/kemal-erdem-yilmaz-a2178411b  </li>
@@ -49,9 +50,7 @@
    		<li>  Unreal Engine Marketplace: https://unrealengine.com/marketplace/en-US/profile/Kemal+Erdem+YILMAZ  </li>
      	<li>  Itch.io: https://elderdeveloper.itch.io/  </li>
  	 </ul>
-
-  
-
+</p>
 
 
 <h2 name="install">Installation</h2>
