@@ -4,7 +4,7 @@
 <h1>Weapon Plugin</h1>
 
 <h2>Description</h2>
-<p>	Custtimizeable weapon codes in a plugin. This plugin can create Pistols , Shotguns , Auto Rifles , Burst Weapons , Roket Launchers , Grenade Launchers and Snipers	</p>
+<p>	Custimizeable weapon codes in a plugin. This plugin can create Pistols , Shotguns , Auto Rifles , Burst Weapons , Roket Launchers , Grenade Launchers and Snipers	</p>
 <p>	With many custimizable variables , each weapon can feel and behave different</p>
 
   <h2>Features</h2>
