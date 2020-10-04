@@ -13,7 +13,7 @@ void USWidgetWeapon::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
       else AimSizeBox->SetVisibility(ESlateVisibility::HitTestInvisible);
 
       AimSizeBox->SetWidthOverride(50 + (aWeaponRef->fCurrentSpread * 100));
-	  AimSizeBox->SetHeightOverride(50 + (aWeaponRef->fCurrentSpread * 100));
+      AimSizeBox->SetHeightOverride(50 + (aWeaponRef->fCurrentSpread * 100));
 
    }
 }
