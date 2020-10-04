@@ -69,11 +69,11 @@
 	<ul>
 		<li>Decompress the archive - and move directory <tt>WeaponPlugin-master/Plugins/WeaponSystem</tt> to <tt>YourProject/Plugins</tt></li>
 		<li>Reopen your project</li>
-		<li>Add to your Character: Add <tt> SWeapon </tt> component to your character</li>
-		<li>In Blueprint Call Spawn Weapon From SWeapon Component</li>
+		<li>Add to your Character: Add <tt>SWeapon component</tt> to your character</li>
+		<li>In Blueprint Call Spawn Weapon From <tt>SWeapon Component</tt></li>
 		<li>In Blueprint Add Input events for Weapon Fire , Reload and Aim</li>
-		<li>Call Begin Fire and End Fire From SWeapon in your Input events </li>
-		<li>Call Reload and Aim from SWeapon Component in your Input event </li>
+		<li>Call Begin Fire and End Fire From <tt>SWeapon Component</tt> in your Input events </li>
+		<li>Call Reload and Aim from <tt>SWeapon Component</tt> in your Input event </li>
 		<li>Launch the game </li>
 	</ul>
 </p>
