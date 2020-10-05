@@ -29,21 +29,27 @@ public:
 
 	FAmmoStateChanged AmmoStateChangedDelegate;
 
-	UPROPERTY(VisibleDefaultsOnly,BlueprintReadWrite )
+private:
+	UPROPERTY(VisibleDefaultsOnly,BlueprintReadOnly,meta = (AllowPrivateAccess = "true"))
 	USkeletalMeshComponent*WeaponSkeleton;
 
-	UPROPERTY(VisibleDefaultsOnly,BlueprintReadWrite)
+	UPROPERTY(VisibleDefaultsOnly,BlueprintReadOnly,meta = (AllowPrivateAccess = "true"))
 	USkeletalMeshComponent*SightComponent;
 	
 	UPROPERTY(EditDefaultsOnly)
 	FName SightAttachmentName;
 
-	UPROPERTY(VisibleDefaultsOnly,BlueprintReadWrite)
+	UPROPERTY(VisibleDefaultsOnly,BlueprintReadWrite,meta = (AllowPrivateAccess = "true"))
 	USkeletalMeshComponent*SilencerComponent;
 	
 	UPROPERTY(EditDefaultsOnly)
 	FName SilencerAttachmentName;
 
+public:
+	
+	FORCEINLINE USkeletalMeshComponent* GetWeaponSkeleton() const { return WeaponSkeleton;}
+	FORCEINLINE USkeletalMeshComponent* GetSightComponent() const { return SightComponent;}
+	FORCEINLINE USkeletalMeshComponent* GetSilencerComponent() const { return SilencerComponent;}
 	
 
 

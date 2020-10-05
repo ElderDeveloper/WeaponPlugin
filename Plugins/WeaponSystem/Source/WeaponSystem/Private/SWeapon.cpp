@@ -30,10 +30,10 @@ ASWeapon::ASWeapon()
 	RootComponent=WeaponSkeleton;
 	
 	SightComponent=CreateDefaultSubobject<USkeletalMeshComponent>("SightComponent");
-	SightComponent->SetupAttachment(WeaponSkeleton);
+	SightComponent->SetupAttachment(GetWeaponSkeleton());
 	
 	SilencerComponent=CreateDefaultSubobject<USkeletalMeshComponent>("SilencerComponent");
-	SilencerComponent->SetupAttachment(WeaponSkeleton);
+	SilencerComponent->SetupAttachment(GetWeaponSkeleton());
 
 	AttachmentTransformRules= new FAttachmentTransformRules(EAttachmentRule::KeepRelative,true);
 
@@ -86,9 +86,9 @@ void ASWeapon::Tick(float DeltaSeconds)
 void ASWeapon::OnConstruction(const FTransform& Transform)
 {
 
-	SightComponent->AttachToComponent(WeaponSkeleton, *AttachmentTransformRules,SightAttachmentName);
+	SightComponent->AttachToComponent(GetWeaponSkeleton(), *AttachmentTransformRules,SightAttachmentName);
 	
-	SilencerComponent->AttachToComponent(WeaponSkeleton, *AttachmentTransformRules,SilencerAttachmentName);
+	SilencerComponent->AttachToComponent(GetWeaponSkeleton(), *AttachmentTransformRules,SilencerAttachmentName);
 
 }
 
@@ -106,7 +106,7 @@ void ASWeapon::F_RequestBeginFire()
 {
 	if (!bHasAmmoInClip)
 	{
-		SpawnAudioAttachedValidate(sClipEmptySound,WeaponSkeleton,nFireSocketName);
+		SpawnAudioAttachedValidate(sClipEmptySound,GetWeaponSkeleton(),nFireSocketName);
 		return;
 	}
 	if (!bFired && !bIsReloading && bCanFireWeapon && bHasAmmoInClip)
@@ -118,7 +118,7 @@ void ASWeapon::F_RequestBeginFire()
 		
 		fProcessedRecoil=0;
 		
-		if (animWeaponFireAnimation)	WeaponSkeleton->PlayAnimation(animWeaponFireAnimation,false);
+		if (animWeaponFireAnimation)	GetWeaponSkeleton()->PlayAnimation(animWeaponFireAnimation,false);
 		
 		if(PlayerSkeletonComponent && F_RetrunPlayerFireMontage())	{	PlayerSkeletonComponent->GetAnimInstance()->Montage_Play(F_RetrunPlayerFireMontage());	}
 		
@@ -132,7 +132,7 @@ void ASWeapon::F_RequestBeginFire()
 			case AutoFire:
 				if (bLoopSoundValid)
 				{
-					audioFireLoop=UGameplayStatics::SpawnSoundAttached(sFireLoopSound,WeaponSkeleton,nFireSocketName);
+					audioFireLoop=UGameplayStatics::SpawnSoundAttached(sFireLoopSound,GetWeaponSkeleton(),nFireSocketName);
 					if (audioFireLoop)
 					{
 						audioFireLoop->bAutoDestroy=false;
@@ -169,7 +169,7 @@ void ASWeapon::F_RequestEndFire()
 		GetWorld()->GetTimerManager().ClearTimer(AutoFireHandle);
 		bFired=false;
 	}
-	SpawnAudioAttachedValidate(sFireEndSound,WeaponSkeleton,nFireSocketName);
+	SpawnAudioAttachedValidate(sFireEndSound,GetWeaponSkeleton(),nFireSocketName);
 }
 
 
@@ -178,7 +178,7 @@ void ASWeapon::F_PlayAutoFire()
 {
 	if(!bUsingNotifyForFire) F_FireEvents();
 	
-	if (animWeaponFireAnimation)	WeaponSkeleton->PlayAnimation(animWeaponFireAnimation,false);
+	if (animWeaponFireAnimation)	GetWeaponSkeleton()->PlayAnimation(animWeaponFireAnimation,false);
 	
 	if(PlayerSkeletonComponent && F_RetrunPlayerFireMontage())	{	PlayerSkeletonComponent->GetAnimInstance()->Montage_Play(F_RetrunPlayerFireMontage());	}
 	
@@ -190,7 +190,7 @@ void ASWeapon::F_PlayerBurstFire()
 {
 	if(!bUsingNotifyForFire) F_FireEvents();
 
-	if (animWeaponFireAnimation)	WeaponSkeleton->PlayAnimation(animWeaponFireAnimation,false);
+	if (animWeaponFireAnimation)	GetWeaponSkeleton()->PlayAnimation(animWeaponFireAnimation,false);
 	
 	if(PlayerSkeletonComponent && F_RetrunPlayerFireMontage())	{	PlayerSkeletonComponent->GetAnimInstance()->Montage_Play(F_RetrunPlayerFireMontage());	}
 	
@@ -230,9 +230,9 @@ void ASWeapon::F_PlaySingleFireEffects()
 {
 	if (oWeaponMuzzleCameraShake && OwnerAsPlayerController)	OwnerAsPlayerController->PlayerCameraManager->PlayCameraShake(oWeaponMuzzleCameraShake);
 	
-	if (pWeaponMuzzle) UGameplayStatics::SpawnEmitterAttached(pWeaponMuzzle,WeaponSkeleton,nFireSocketName,FVector(ForceInit),tWeaponMuzzleTransform.Rotator(),tWeaponMuzzleTransform.GetScale3D());
+	if (pWeaponMuzzle) UGameplayStatics::SpawnEmitterAttached(pWeaponMuzzle,GetWeaponSkeleton(),nFireSocketName,FVector(ForceInit),tWeaponMuzzleTransform.Rotator(),tWeaponMuzzleTransform.GetScale3D());
 	
-	if (!bLoopSoundValid && sFireStartSound) UGameplayStatics::PlaySoundAtLocation(GetWorld(),sFireStartSound,WeaponSkeleton->GetSocketLocation(nFireSocketName));
+	if (!bLoopSoundValid && sFireStartSound) UGameplayStatics::PlaySoundAtLocation(GetWorld(),sFireStartSound,GetWeaponSkeleton()->GetSocketLocation(nFireSocketName));
 }
 
 
@@ -257,13 +257,13 @@ void ASWeapon::F_RequestReload()
 	if (!bIsReloading && iCurrentAmmoInBag>0)
 	{
 	bIsReloading=true;
-	SpawnAudioAttachedValidate(soundWeaponReloadSound,WeaponSkeleton,nFireSocketName);
+	SpawnAudioAttachedValidate(soundWeaponReloadSound,GetWeaponSkeleton(),nFireSocketName);
 		
 	if(PlayerSkeletonComponent && animPlayerReloadMontage)	{	PlayerSkeletonComponent->GetAnimInstance()->Montage_Play(animPlayerReloadMontage);	}
 		
 	if (animWeaponReloadAnimation)
 	{
-		WeaponSkeleton->PlayAnimation(animWeaponReloadAnimation,false);
+		GetWeaponSkeleton()->PlayAnimation(animWeaponReloadAnimation,false);
 		GetWorld()->GetTimerManager().SetTimer(ReloadHandle,this,&ASWeapon::F_ReloadBlendOut,animWeaponReloadAnimation->GetPlayLength()-fAnimMinusToReloadTime,false);
 		return;
 	}
@@ -389,15 +389,15 @@ void ASWeapon::F_CalculateSpread(FVector& StartLocation, FVector& EndLocation, F
 		
 		GetWorld()->LineTraceSingleByChannel(PlayerCameraHit,OwnerCameraNanager->GetCameraLocation(),End,FireCalculateChannel);
 
-		SpawnRotation= UKismetMathLibrary::FindLookAtRotation(WeaponSkeleton->GetSocketLocation(nFireSocketName),PlayerCameraHit.TraceEnd);
+		SpawnRotation= UKismetMathLibrary::FindLookAtRotation(GetWeaponSkeleton()->GetSocketLocation(nFireSocketName),PlayerCameraHit.TraceEnd);
 
 	}
 	else
 	{
-		SpawnRotation = WeaponSkeleton->GetSocketRotation(nFireSocketName);
+		SpawnRotation = GetWeaponSkeleton()->GetSocketRotation(nFireSocketName);
 	}
 
-	StartLocation = WeaponSkeleton->GetSocketLocation(nFireSocketName);
+	StartLocation = GetWeaponSkeleton()->GetSocketLocation(nFireSocketName);
 	
 	SpawnRotation.Yaw=SpawnRotation.Yaw+FMath::RandRange(fCurrentSpread*-1,fCurrentSpread);
 	
@@ -549,7 +549,7 @@ void ASWeapon::F_ProcessAimTimeline()
 	if (OwnerAsCharacter && PlayerSkeletonComponent && OwnerCamera)
 	{
 		float alpha = uAimCurveFloat->GetFloatValue(tlAimTimeline.GetPlaybackPosition());
-		FTransform WeaponTransfrom = UKismetMathLibrary::ConvertTransformToRelative(OwnerAsCharacter->GetTransform(),WeaponSkeleton->GetSocketTransform(nWeaponAimSocketName));
+		FTransform WeaponTransfrom = UKismetMathLibrary::ConvertTransformToRelative(OwnerAsCharacter->GetTransform(),GetWeaponSkeleton()->GetSocketTransform(nWeaponAimSocketName));
 		OwnerCamera->SetRelativeLocation(UKismetMathLibrary::VLerp(PlayerCameraRelative,WeaponTransfrom.GetLocation(),alpha));
 	}
 }
